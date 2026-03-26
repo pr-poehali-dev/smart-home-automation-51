@@ -42,11 +42,14 @@ export default function ImageGen({ open, onClose }: ImageGenProps) {
       const englishPrompt = await translatePrompt(trimmed)
       const encoded = encodeURIComponent(englishPrompt)
       const url = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true&seed=${Date.now()}`
-      const res = await fetch(url)
-      if (!res.ok) throw new Error("Ошибка генерации")
-      const blob = await res.blob()
-      const objectUrl = URL.createObjectURL(blob)
-      setImageUrl(objectUrl)
+      
+      await new Promise<void>((resolve, reject) => {
+        const img = new Image()
+        img.crossOrigin = "anonymous"
+        img.onload = () => { setImageUrl(url); resolve() }
+        img.onerror = () => reject(new Error("Ошибка загрузки"))
+        img.src = url
+      })
     } catch {
       setError("Не удалось сгенерировать изображение. Попробуйте ещё раз.")
     } finally {
@@ -63,10 +66,7 @@ export default function ImageGen({ open, onClose }: ImageGenProps) {
 
   const handleDownload = () => {
     if (!imageUrl) return
-    const a = document.createElement("a")
-    a.href = imageUrl
-    a.download = "neyromax-image.png"
-    a.click()
+    window.open(imageUrl, "_blank")
   }
 
   return (
