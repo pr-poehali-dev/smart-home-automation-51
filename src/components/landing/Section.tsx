@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import type { SectionProps } from "@/types"
 import ChatWidget from "./ChatWidget"
 
-export default function Section({ id, title, subtitle, content, isActive, showButton, buttonText, showChat }: SectionProps) {
+export default function Section({ id, title, subtitle, content, isActive, showButton, buttonText, showChat, onButtonClick }: SectionProps) {
   return (
     <section id={id} className="relative h-screen w-full snap-start flex flex-col justify-center p-8 md:p-16 lg:p-24">
       {subtitle && (
@@ -54,6 +54,7 @@ export default function Section({ id, title, subtitle, content, isActive, showBu
             variant="outline"
             size="lg"
             className="text-[#00F5FF] bg-transparent border-[#00F5FF] hover:bg-[#00F5FF] hover:text-black transition-colors"
+            onClick={onButtonClick}
           >
             {buttonText}
           </Button>

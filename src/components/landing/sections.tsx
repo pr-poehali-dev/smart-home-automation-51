@@ -6,7 +6,7 @@ export const sections = [
     subtitle: <Badge variant="outline" className="text-[#00F5FF] border-[#00F5FF]">AI нового поколения</Badge>,
     title: "NeyroMAX — думай быстрее.",
     showButton: true,
-    buttonText: 'Попробовать бесплатно'
+    buttonText: 'Попробовать'
   },
   {
     id: 'about',
@@ -28,7 +28,5 @@ export const sections = [
     id: 'cta',
     title: 'Начните работать умнее.',
     content: 'NeyroMAX доступен 24/7 и готов помочь с любой задачей — от простых ответов до сложного кода.',
-    showButton: true,
-    buttonText: 'Начать бесплатно'
   },
 ]
