@@ -19,7 +19,11 @@ def get_token(auth_key: str) -> str:
         "Content-Type": "application/x-www-form-urlencoded",
     }
     resp = requests.post(url, headers=headers, data={"scope": "GIGACHAT_API_PERS"}, verify=False, timeout=10)
-    return resp.json()["access_token"]
+    data = resp.json()
+    print(f"[GigaChat OAuth] status={resp.status_code} response={data}")
+    if "access_token" not in data:
+        raise Exception(f"OAuth failed: {data}")
+    return data["access_token"]
 
 
 def handler(event: dict, context) -> dict:
@@ -39,7 +43,11 @@ def handler(event: dict, context) -> dict:
         return {"statusCode": 400, "headers": cors_headers, "body": json.dumps({"error": "messages required"})}
 
     auth_key = os.environ["GIGACHAT_API_KEY"]
-    token = get_token(auth_key)
+    try:
+        token = get_token(auth_key)
+    except Exception as e:
+        print(f"[GigaChat] Token error: {e}")
+        return {"statusCode": 502, "headers": cors_headers, "body": json.dumps({"error": str(e)}, ensure_ascii=False)}
 
     system_message = {
         "role": "system",
