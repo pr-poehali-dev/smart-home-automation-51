@@ -8,6 +8,7 @@ export interface Section {
   showButton?: boolean
   buttonText?: string
   showChat?: boolean
+  footer?: string
 }
 
 export interface SectionProps extends Section {

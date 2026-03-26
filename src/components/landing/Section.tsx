@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import type { SectionProps } from "@/types"
 import ChatWidget from "./ChatWidget"
 
-export default function Section({ id, title, subtitle, content, isActive, showButton, buttonText, showChat, onButtonClick }: SectionProps) {
+export default function Section({ id, title, subtitle, content, footer, isActive, showButton, buttonText, showChat, onButtonClick }: SectionProps) {
   return (
     <section id={id} className="relative h-screen w-full snap-start flex flex-col justify-center p-8 md:p-16 lg:p-24">
       {subtitle && (
@@ -42,6 +42,16 @@ export default function Section({ id, title, subtitle, content, isActive, showBu
         >
           <ChatWidget />
         </motion.div>
+      )}
+      {footer && (
+        <motion.p
+          className="text-sm text-white/30 mt-8"
+          initial={{ opacity: 0 }}
+          animate={isActive ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          {footer}
+        </motion.p>
       )}
       {showButton && (
         <motion.div
