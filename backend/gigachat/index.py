@@ -71,7 +71,8 @@ def handler(event: dict, context) -> dict:
         "messages": full_messages,
         "temperature": 0.7,
     }
-    resp = requests.post(url, headers=headers, json=payload, verify=False, timeout=30)
+    resp = requests.post(url, headers=headers, json=payload, verify=False, timeout=25)
+    print(f"[GigaChat] chat status={resp.status_code} body={resp.text[:500]}")
     data = resp.json()
     reply = data["choices"][0]["message"]["content"]
 
