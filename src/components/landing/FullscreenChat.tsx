@@ -154,7 +154,7 @@ export default function FullscreenChat({ open, onClose }: FullscreenChatProps) {
               </button>
             </div>
             <div className="max-w-4xl mx-auto text-center mt-2 pb-1">
-              <span className="text-white/10 text-xs font-bold tracking-[0.3em] uppercase select-none">NEYROMAX</span>
+              <span className="text-white/10 text-2xl font-bold tracking-[0.3em] uppercase select-none">NEYROMAX</span>
             </div>
           </div>
         </motion.div>
