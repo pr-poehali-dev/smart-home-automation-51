@@ -2,6 +2,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Icon from "@/components/ui/icon"
 
+const MISTRAL_URL = "https://functions.poehali.dev/f0fc879c-86f5-41ce-9111-5ae39ecc4300"
+
 interface ImageGenProps {
   open: boolean
   onClose: () => void
@@ -13,6 +15,21 @@ export default function ImageGen({ open, onClose }: ImageGenProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const translatePrompt = async (text: string): Promise<string> => {
+    const resp = await fetch(MISTRAL_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{
+          role: "user",
+          content: `Translate the following image description to English for an AI image generator. Return ONLY the translated text, nothing else: "${text}"`
+        }]
+      }),
+    })
+    const data = await resp.json()
+    return data.reply || text
+  }
+
   const generate = async () => {
     const trimmed = prompt.trim()
     if (!trimmed || loading) return
@@ -21,10 +38,10 @@ export default function ImageGen({ open, onClose }: ImageGenProps) {
     setError(null)
     setImageUrl(null)
 
-    const encoded = encodeURIComponent(trimmed)
-    const url = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true&seed=${Date.now()}`
-
     try {
+      const englishPrompt = await translatePrompt(trimmed)
+      const encoded = encodeURIComponent(englishPrompt)
+      const url = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true&seed=${Date.now()}`
       const res = await fetch(url)
       if (!res.ok) throw new Error("Ошибка генерации")
       const blob = await res.blob()
