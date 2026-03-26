@@ -13,6 +13,13 @@ export default function LandingPage() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
   useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0
+    }
+    setActiveSection(0)
+  }, [])
+
+  useEffect(() => {
     const handleScroll = () => {
       if (containerRef.current) {
         const scrollPosition = containerRef.current.scrollTop
