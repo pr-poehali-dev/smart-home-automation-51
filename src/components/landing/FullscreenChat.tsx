@@ -58,6 +58,10 @@ export default function FullscreenChat({ open, onClose }: FullscreenChatProps) {
     setLoading(false)
   }
 
+  const clearHistory = () => {
+    setMessages([{ role: "assistant", text: "Привет! Я NeyroMAX. Задайте любой вопрос или попросите написать код — отвечу мгновенно." }])
+  }
+
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault()
@@ -82,12 +86,21 @@ export default function FullscreenChat({ open, onClose }: FullscreenChatProps) {
               <span className="text-[#00F5FF] font-semibold text-lg">NeyroMAX</span>
               <span className="text-white/30 text-sm">· онлайн</span>
             </div>
-            <button
-              onClick={onClose}
-              className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-colors"
-            >
-              <Icon name="X" size={18} />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={clearHistory}
+                title="Очистить историю"
+                className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-colors"
+              >
+                <Icon name="Trash2" size={16} />
+              </button>
+              <button
+                onClick={onClose}
+                className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/30 transition-colors"
+              >
+                <Icon name="X" size={18} />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
