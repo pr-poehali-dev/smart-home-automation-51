@@ -132,7 +132,7 @@ export default function FullscreenChat({ open, onClose }: FullscreenChatProps) {
           </div>
 
           {/* Input */}
-          <div className="px-4 md:px-8 py-4 border-t border-white/10 flex-shrink-0">
+          <div className="px-4 md:px-8 pt-4 pb-2 border-t border-white/10 flex-shrink-0">
             <div className="max-w-4xl mx-auto flex gap-3 items-end">
               <textarea
                 ref={inputRef}
@@ -152,6 +152,9 @@ export default function FullscreenChat({ open, onClose }: FullscreenChatProps) {
               >
                 <Icon name="Send" size={18} />
               </button>
+            </div>
+            <div className="max-w-4xl mx-auto text-center mt-2 pb-1">
+              <span className="text-white/10 text-xs font-bold tracking-[0.3em] uppercase select-none">NEYROMAX</span>
             </div>
           </div>
         </motion.div>
