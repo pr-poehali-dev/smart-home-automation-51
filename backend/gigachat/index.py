@@ -41,6 +41,18 @@ def handler(event: dict, context) -> dict:
     auth_key = os.environ["GIGACHAT_API_KEY"]
     token = get_token(auth_key)
 
+    system_message = {
+        "role": "system",
+        "content": (
+            "Ты — NeyroMAX, умный AI-ассистент нового поколения. "
+            "Ты помогаешь пользователям с любыми вопросами: отвечаешь на вопросы, пишешь и объясняешь код, "
+            "помогаешь с анализом данных и сложными задачами. "
+            "Общайся дружелюбно, по-русски, чётко и по делу. "
+            "Никогда не называй себя GigaChat или упоминай Сбер — ты NeyroMAX и только NeyroMAX."
+        )
+    }
+    full_messages = [system_message] + messages
+
     url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {token}",
@@ -48,7 +60,7 @@ def handler(event: dict, context) -> dict:
     }
     payload = {
         "model": "GigaChat",
-        "messages": messages,
+        "messages": full_messages,
         "temperature": 0.7,
     }
     resp = requests.post(url, headers=headers, json=payload, verify=False, timeout=30)
