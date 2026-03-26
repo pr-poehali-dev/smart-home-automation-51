@@ -4,10 +4,12 @@ import Section from './Section'
 import Layout from './Layout'
 import { sections } from './sections'
 import FullscreenChat from './FullscreenChat'
+import ImageGen from './ImageGen'
 
 export default function LandingPage() {
   const [activeSection, setActiveSection] = useState(0)
   const [chatOpen, setChatOpen] = useState(false)
+  const [imageGenOpen, setImageGenOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ container: containerRef })
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
@@ -77,11 +79,13 @@ export default function LandingPage() {
             {...section}
             isActive={index === activeSection}
             onButtonClick={section.showButton ? () => setChatOpen(true) : undefined}
+            onImageButtonClick={section.showImageButton ? () => setImageGenOpen(true) : undefined}
           />
         ))}
       </div>
 
       <FullscreenChat open={chatOpen} onClose={() => setChatOpen(false)} />
+      <ImageGen open={imageGenOpen} onClose={() => setImageGenOpen(false)} />
     </Layout>
   )
 }
